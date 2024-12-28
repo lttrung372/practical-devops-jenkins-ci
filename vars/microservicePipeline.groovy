@@ -1,5 +1,5 @@
-import org.company.template.FrontendPipeline
-import org.company.template.BackendPipeline
+import org.practicaldevops.template.FrontendPipeline
+import org.practicaldevops.template.BackendPipeline
 
 def call(Map config) {
     // If no script parameter is provided, use 'this'
