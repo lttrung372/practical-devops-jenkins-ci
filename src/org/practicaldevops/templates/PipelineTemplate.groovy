@@ -1,4 +1,4 @@
-package org.practicaldevops.template
+package org.practicaldevops.templates
 import org.practicaldevops.utils.Config
 
 abstract class PipelineTemplate implements Serializable {

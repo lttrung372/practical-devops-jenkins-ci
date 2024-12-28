@@ -1,4 +1,4 @@
-package org.practicaldevops.template
+package org.practicaldevops.templates
 
 class BackendPipeline extends PipelineTemplate {
     BackendPipeline(script, config) {
