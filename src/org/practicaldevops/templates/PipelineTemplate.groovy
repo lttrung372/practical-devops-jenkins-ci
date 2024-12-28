@@ -23,15 +23,15 @@ abstract class PipelineTemplate implements Serializable {
         script.pipeline {
             agent any
             
-            environment {
-                AWS_REGION = AWS_REGION
-                ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-                ECR_REPO = ECR_REPO
-                IMAGE_NAME = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-${script.BUILD_NUMBER}"
-                IMAGE_LATEST = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-latest"
-                KUBERNETES_NAMESPACE = KUBE_NAMESPACE
-                AWS_CREDENTIALS = script.credentials('aws-credentials')
-            }
+            // environment {
+            //     AWS_REGION = AWS_REGION
+            //     ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+            //     ECR_REPO = ECR_REPO
+            //     IMAGE_NAME = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-${script.BUILD_NUMBER}"
+            //     IMAGE_LATEST = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-latest"
+            //     KUBERNETES_NAMESPACE = KUBE_NAMESPACE
+            //     AWS_CREDENTIALS = script.credentials('aws-credentials')
+            // }
             
             stages {
                 stage('Checkout') {
