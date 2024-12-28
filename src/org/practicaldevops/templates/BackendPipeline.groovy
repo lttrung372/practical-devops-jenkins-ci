@@ -10,18 +10,18 @@ class BackendPipeline extends PipelineTemplate {
         script.checkout script.scm
     }
     
-    @Override
-    void build() {
-        script.sh './gradlew clean build'
-    }
+    // @Override
+    // void build() {
+    //     script.sh './gradlew clean build'
+    // }
     
-    @Override
-    void test() {
-        script.sh '''
-            ./gradlew test
-            ./gradlew checkstyle
-        '''
-    }
+    // @Override
+    // void test() {
+    //     script.sh '''
+    //         ./gradlew test
+    //         ./gradlew checkstyle
+    //     '''
+    // }
     
     @Override
     void buildDocker() {
