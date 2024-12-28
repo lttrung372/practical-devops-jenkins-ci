@@ -1,17 +1,21 @@
 package org.practicaldevops.templates
-import org.practicaldevops.utils.Config
 
 abstract class PipelineTemplate implements Serializable {
     protected def script
     protected def config
     protected def environment
-    protected Config envConfig
-    
+    // protected Config envConfig
+
+    // Constants and default values
+    protected static final String AWS_REGION = 'ap-southeast-1'
+    protected static final String ECR_REPO = 'practical-devops-ecr'
+    protected static final String AWS_ACCOUNTID = '307946653621'
+    protected static final String KUBE_NAMESPACE = 'development'
+
     PipelineTemplate(script, config) {
         this.script = script
         this.config = config
         this.environment = config.environment ?: 'dev'
-        this.envConfig = new Config(script, environment)
     }
     
     // Template method that defines the pipeline structure
@@ -20,12 +24,12 @@ abstract class PipelineTemplate implements Serializable {
             agent any
             
             environment {
-                AWS_REGION = envConfig.getAWSRegion()
-                ECR_REGISTRY = "${envConfig.getAWSAccountId()}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-                ECR_REPO = envConfig.getECRRepository()
+                AWS_REGION = AWS_REGION
+                ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                ECR_REPO = ECR_REPO
                 IMAGE_NAME = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-${script.BUILD_NUMBER}"
                 IMAGE_LATEST = "${ECR_REGISTRY}/${ECR_REPO}:${config.serviceType}-${environment}-latest"
-                KUBERNETES_NAMESPACE = envConfig.getKubernetesNamespace()
+                KUBERNETES_NAMESPACE = KUBE_NAMESPACE
                 AWS_CREDENTIALS = script.credentials('aws-credentials')
             }
             
@@ -134,7 +138,7 @@ abstract class PipelineTemplate implements Serializable {
     }
     
     void deploy() {
-        def serviceConfig = envConfig.getServiceConfig(config.serviceType)
+        def serviceConfig = config.services[config.serviceType]
         
         script.withKubeConfig([credentialsId: 'kubernetes-credentials']) {
             script.sh """
