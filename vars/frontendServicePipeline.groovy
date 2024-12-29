@@ -81,7 +81,8 @@ void call(Map pipelineParams) {
                         withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
                             // Ensure the deployToEKS function is available in the global context
                             // Step 1: Clone the Git repository that contains the Kubernetes manifests
-                            sh """
+                            withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_TOKEN')]) {
+                                sh """
                                 git clone https://github.com/letantrung372/SD1096_MSA_GitOps.git
                                 cd SD1096_MSA_GitOps/${serviceName}
 
@@ -95,6 +96,7 @@ void call(Map pipelineParams) {
                                 git commit -m "Update deployment image to ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
                                 git push origin master  # Or use your relevant branch
                             """
+                            }
 
                             // Step 2: Update kubeconfig for EKS cluster
                             global.deployToEKS(
