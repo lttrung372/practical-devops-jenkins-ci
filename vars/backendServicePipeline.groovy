@@ -81,7 +81,7 @@ void call(Map pipelineParams) {
                         withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_TOKEN')]) {
                             sh """
                             git clone https://${GITHUB_TOKEN}@github.com/letantrung372/SD1096_MSA_GitOps.git
-                            cd your-repo/${serviceName}
+                            cd SD1096_MSA_GitOps/${serviceName}
 
                             # Update the deployment.yaml with the new image tag
                                 sed -i 's|image: .*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|g' deployment.yaml
