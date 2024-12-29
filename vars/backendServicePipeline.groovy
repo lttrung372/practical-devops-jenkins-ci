@@ -1,5 +1,11 @@
 #!/usr/bin/env groovy
 void call(Map pipelineParams) {
+    def AWS_REGION = 'ap-southeast-1'
+    def ECR_REPO = 'practical-devops-ecr'
+    def AWS_ACCOUNTID = '307946653621'
+    def ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}"
+    def IMAGE_TAG = "SD1096-${serviceName}.${BUILD_NUMBER}-${new Date().format('yyyyMMddHHmmss')}"
+    
     pipeline {
         agent any
 
