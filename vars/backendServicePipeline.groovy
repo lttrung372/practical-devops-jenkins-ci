@@ -80,6 +80,23 @@ void call(Map pipelineParams) {
                         // Ensure that you are using the correct AWS credentials and region
                         withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
                             // Ensure the deployToEKS function is available in the global context
+                            // Ensure the deployToEKS function is available in the global context
+                            // Step 1: Clone the Git repository that contains the Kubernetes manifests
+                            sh """
+                                git clone https://github.com/letantrung372/SD1096_MSA_GitOps.git
+                                cd SD1096_MSA_GitOps/${serviceName}
+
+                                # Update the deployment.yaml with the new image tag
+                                sed -i 's|image: .*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|g' deployment.yaml
+
+                                # Commit the changes to Git
+                                git config user.name "Jenkins CI"
+                                git config user.email "jenkins@your-domain.com"
+                                git add deployment.yaml
+                                git commit -m "Update deployment image to ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
+                                git push origin main  # Or use your relevant branch
+                            """
+                            
                             global.deployToEKS(
                                 CLUSTER_NAME: CLUSTER_NAME,
                                 NAMESPACE: NAMESPACE,
