@@ -11,7 +11,7 @@ void call(Map pipelineParams) {
     def CONTAINER_NAME = "${serviceName}-container"
     def CLUSTER_NAME = "practical-devops-eks"
     def NAMESPACE = "${serviceName}-ns"
-    def DEPLOYMENT_NAME = "development"
+    def DEPLOYMENT_NAME = "${serviceName}-development"
     def ECR_REPOSITORY = "${ECR_REPO}"
 
     def global = new Global()
