@@ -18,7 +18,7 @@ void call(Map pipelineParams) {
                 steps {
                     script {
                         dir('src/frontend') {
-                            frontendPipelineTemplate("frontend")
+                            pipelineTemplate("frontend")
                         }
                     }
                 }
