@@ -94,9 +94,9 @@ void call(Map pipelineParams) {
                                 git config user.email "jenkins@your-domain.com"
                                 git add deployment.yaml
                                 git commit -m "Update deployment image to ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
-                                git push origin main  # Or use your relevant branch
+                                git push origin master  # Or use your relevant branch
                             """
-                            
+
                             global.deployToEKS(
                                 CLUSTER_NAME: CLUSTER_NAME,
                                 NAMESPACE: NAMESPACE,
