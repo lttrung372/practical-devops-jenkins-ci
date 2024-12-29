@@ -84,7 +84,7 @@ def deployToEKS(args) {
                 -n ${NAMESPACE}
 
             # Wait for rollout to complete
-            kubectl rollout status deployment/${ACTUAL_DEPLOYMENT_NAME} -n ${NAMESPACE}
+            kubectl rollout status deployment/\${ACTUAL_DEPLOYMENT_NAME} -n ${NAMESPACE}
         """
             }
 }
