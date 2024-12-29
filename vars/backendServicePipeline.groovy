@@ -14,11 +14,44 @@ void call(Map pipelineParams) {
         }
 
         stages {
-            stage ('Load Pipeline') {
+            stage('Load Pipeline') {
                 steps {
                     script {
                         dir('src/backend') {
-                            pipelineTemplate("backend")
+                            //pipelineTemplate("backend")
+                            withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
+                                stage('Login to AWS ECR') {
+                                    script {
+                                        sh """
+                aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                """
+                                    }
+                                }
+
+                                stage('Build Docker Image') {
+                                    script {
+                                        sh """
+                docker build -t ${ECR_REPOSITORY}:${IMAGE_TAG} .
+                """
+                                    }
+                                }
+
+                                stage('Tag Docker Image') {
+                                    script {
+                                        sh """
+                docker tag ${ECR_REPOSITORY}:${IMAGE_TAG} ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+                """
+                                    }
+                                }
+
+                                stage('Push to ECR') {
+                                    script {
+                                        sh """
+                docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}
+                """
+                                    }
+                                }
+                            }
                         }
                     }
                 }
