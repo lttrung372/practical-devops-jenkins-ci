@@ -80,6 +80,9 @@ void call(Map pipelineParams) {
                         // Step 1: Clone the Git repository that contains the Kubernetes manifests
                         withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_TOKEN')]) {
                             sh """
+                            # Clean any existing directory
+                            rm -rf SD1096_MSA_GitOps
+
                             git clone https://${GITHUB_TOKEN}@github.com/letantrung372/SD1096_MSA_GitOps.git
                             cd SD1096_MSA_GitOps/${serviceName}
 
@@ -91,7 +94,7 @@ void call(Map pipelineParams) {
                                 git config user.email "jenkins@your-domain.com"
                                 git add deployment.yaml
                                 git commit -m "Update deployment image to ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
-                                git push origin master  # Or use your relevant branch
+                                git push -f origin master  # Or use your relevant branch
                         """
                         }
 

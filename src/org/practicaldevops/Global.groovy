@@ -62,6 +62,8 @@ def deployToEKS(args) {
 
     script {
                 sh """
+            cd SD1096_MSA_GitOps/${SERVICE_NAME}
+
             # Update kubeconfig
             aws eks update-kubeconfig --name ${CLUSTER_NAME}
 
