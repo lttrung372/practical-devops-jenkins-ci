@@ -10,10 +10,10 @@ package org.practicaldevops
 def loginToECR(args) {
     def AWS_REGION = args.AWS_REGION
     def ECR_REGISTRY = args.ECR_REGISTRY
-
+    def AWS_PROFILE = "practical-devop-aws"
     script {
                 sh """
-                aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                aws ecr get-login-password --region ${AWS_REGION} --profile ${AWS_PROFILE} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
                 """
     }
 }
