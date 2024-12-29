@@ -65,6 +65,9 @@ def deployToEKS(args) {
             # Update kubeconfig
             aws eks update-kubeconfig --name ${CLUSTER_NAME}
 
+            # Check if the namespace exists, and create it if it doesn't
+            kubectl get namespace ${NAMESPACE} || kubectl create namespace ${NAMESPACE}
+
             # Deploy to EKS
             kubectl set image deployment/${DEPLOYMENT_NAME} \
                 ${CONTAINER_NAME}=${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG} \
