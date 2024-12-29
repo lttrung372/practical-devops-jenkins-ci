@@ -80,7 +80,7 @@ void call(Map pipelineParams) {
                         // Step 1: Clone the Git repository that contains the Kubernetes manifests
                         withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_TOKEN')]) {
                             sh """
-                            git clone https://github.com/letantrung372/SD1096_MSA_GitOps.git
+                            git clone https://${GITHUB_TOKEN}@github.com/your-org/your-repo.git
                             cd SD1096_MSA_GitOps/${serviceName}
 
                             # Update the deployment.yaml with the new image tag

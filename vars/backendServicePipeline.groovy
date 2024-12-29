@@ -80,10 +80,10 @@ void call(Map pipelineParams) {
                         // Step 1: Clone the Git repository that contains the Kubernetes manifests
                         withCredentials([string(credentialsId: 'github-pat', variable: 'GITHUB_TOKEN')]) {
                             sh """
-                                git clone https://github.com/letantrung372/SD1096_MSA_GitOps.git
-                                cd SD1096_MSA_GitOps/${serviceName}
+                            git clone https://${GITHUB_TOKEN}@github.com/letantrung372/SD1096_MSA_GitOps.git
+                            cd your-repo/${serviceName}
 
-                                # Update the deployment.yaml with the new image tag
+                            # Update the deployment.yaml with the new image tag
                                 sed -i 's|image: .*|image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}|g' deployment.yaml
 
                                 # Commit the changes to Git
@@ -92,8 +92,9 @@ void call(Map pipelineParams) {
                                 git add deployment.yaml
                                 git commit -m "Update deployment image to ${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
                                 git push origin master  # Or use your relevant branch
-                            """
+                        """
                         }
+
                         // Ensure that you are using the correct AWS credentials and region
                         withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
                             // Ensure the deployToEKS function is available in the global context
