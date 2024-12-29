@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import org.practicaldevops.*
 
 void call(Map pipelineParams) {
     def AWS_REGION = 'ap-southeast-1'
@@ -7,6 +8,13 @@ void call(Map pipelineParams) {
     def serviceName = 'backend'
     def ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     def IMAGE_TAG = "SD1096-${serviceName}.${BUILD_NUMBER}-${new Date().format('yyyyMMddHHmmss')}"
+    def CONTAINER_NAME = "${serviceName}-container"
+    def CLUSTER_NAME = "practical-devops-eks"
+    def NAMESPACE = "${serviceName}-ns"
+    def DEPLOYMENT_NAME = "development"
+    def ECR_REPOSITORY = "${ECR_REPO}"
+
+    def global = new Global()
 
     pipeline {
         agent any
@@ -63,6 +71,12 @@ void call(Map pipelineParams) {
                             docker push ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
                         """
                     }
+                }
+            }
+
+            stage('Deploy to EKS') {
+                steps {
+                    global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
                 }
             }
         }
