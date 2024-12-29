@@ -74,8 +74,12 @@ def deployToEKS(args) {
             # Apply the deployment YAML
             kubectl apply -f deployment.yaml --namespace ${NAMESPACE}
 
-            # Deploy to EKS
-            kubectl set image deployment/${DEPLOYMENT_NAME} \
+            # Get the actual deployment name from kubernetes
+            ACTUAL_DEPLOYMENT_NAME=\$(kubectl get deployment -n ${NAMESPACE} -o jsonpath='{.items[0].metadata.name}')
+            echo "Actual deployment name: \${ACTUAL_DEPLOYMENT_NAME}"
+
+            # Update the container image using the actual deployment name
+            kubectl set image deployment/\${ACTUAL_DEPLOYMENT_NAME} \
                 ${CONTAINER_NAME}=${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG} \
                 -n ${NAMESPACE}
 
