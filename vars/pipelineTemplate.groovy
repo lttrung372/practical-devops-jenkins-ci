@@ -1,4 +1,4 @@
-import practicaldevops.templates.*
+import org.practicaldevops.*
 
 def call(serviceName) {
     // Constants and default values

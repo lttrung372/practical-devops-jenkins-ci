@@ -1,4 +1,4 @@
-package practicaldevops.templates
+package org.practicaldevops
 
 // def pythonRunInstallDependencies(){
 //     stage ("Run Install Dependencies ") {
