@@ -68,8 +68,8 @@ def deployToEKS(args) {
             # Check if the namespace exists, and create it if it doesn't
             kubectl get namespace ${NAMESPACE} || kubectl create namespace ${NAMESPACE}
 
-            # Check if the deployment exists, create it if it doesn't
-            kubectl get deployment ${DEPLOYMENT_NAME} --namespace ${NAMESPACE} || kubectl apply -f deployment.yaml --namespace ${NAMESPACE}
+            # Apply the deployment YAML
+            kubectl apply -f deployment.yaml --namespace ${NAMESPACE}
 
             # Deploy to EKS
             kubectl set image deployment/${DEPLOYMENT_NAME} \

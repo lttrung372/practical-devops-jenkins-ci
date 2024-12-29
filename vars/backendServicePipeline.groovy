@@ -98,7 +98,6 @@ void call(Map pipelineParams) {
                         // Ensure that you are using the correct AWS credentials and region
                         withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
                             // Ensure the deployToEKS function is available in the global context
-                            // Ensure the deployToEKS function is available in the global context
 
                             global.deployToEKS(
                                 CLUSTER_NAME: CLUSTER_NAME,
