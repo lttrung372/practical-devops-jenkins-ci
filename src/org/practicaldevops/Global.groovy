@@ -59,6 +59,7 @@ def deployToEKS(args) {
     def IMAGE_TAG = args.IMAGE_TAG
     def CONTAINER_NAME = args.CONTAINER_NAME
     def ECR_REGISTRY = args.ECR_REGISTRY
+    def SERVICE_NAME = args.SERVICE_NAME
 
     script {
                 sh """

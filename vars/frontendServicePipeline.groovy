@@ -109,7 +109,8 @@ void call(Map pipelineParams) {
                                 DEPLOYMENT_NAME: DEPLOYMENT_NAME,
                                 ECR_REPOSITORY: ECR_REPOSITORY,
                                 IMAGE_TAG: IMAGE_TAG,
-                                CONTAINER_NAME: CONTAINER_NAME
+                                CONTAINER_NAME: CONTAINER_NAME,
+                                SERVICE_NAME:serviceName
                 )
                         }
                     }
