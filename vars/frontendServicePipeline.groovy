@@ -77,7 +77,18 @@ void call(Map pipelineParams) {
             stage('Deploy to EKS') {
                 steps {
                     script {
-                        global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
+                        // Ensure that you are using the correct AWS credentials and region
+                        withAWS(credentials: 'AWSCredentails', region: AWS_REGION) {
+                            // Ensure the deployToEKS function is available in the global context
+                            global.deployToEKS(
+                                CLUSTER_NAME: CLUSTER_NAME,
+                                NAMESPACE: NAMESPACE,
+                                DEPLOYMENT_NAME: DEPLOYMENT_NAME,
+                                ECR_REPOSITORY: ECR_REPOSITORY,
+                                IMAGE_TAG: IMAGE_TAG,
+                                CONTAINER_NAME: CONTAINER_NAME
+                )
+                        }
                     }
                 }
             }
