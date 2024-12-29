@@ -54,7 +54,7 @@ def pushDockerImages(args) {
 def deployToEKS(args) {
     def CLUSTER_NAME = args.CLUSTER_NAME
     def NAMESPACE = args.NAMESPACE
-    def DEPLOYMENT_NAME = args.DEPLOYMENT_NAME
+    // def DEPLOYMENT_NAME = args.DEPLOYMENT_NAME
     def ECR_REPOSITORY = args.ECR_REPOSITORY
     def IMAGE_TAG = args.IMAGE_TAG
     def CONTAINER_NAME = args.CONTAINER_NAME
@@ -84,7 +84,7 @@ def deployToEKS(args) {
                 -n ${NAMESPACE}
 
             # Wait for rollout to complete
-            kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${NAMESPACE}
+            kubectl rollout status deployment/${ACTUAL_DEPLOYMENT_NAME} -n ${NAMESPACE}
         """
             }
 }
