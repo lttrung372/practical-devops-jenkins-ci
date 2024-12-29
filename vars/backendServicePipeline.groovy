@@ -9,9 +9,9 @@ void call(Map pipelineParams) {
     def ECR_REGISTRY = "${AWS_ACCOUNTID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     def IMAGE_TAG = "SD1096-${serviceName}.${BUILD_NUMBER}-${new Date().format('yyyyMMddHHmmss')}"
     def CONTAINER_NAME = "${serviceName}-container"
-    def CLUSTER_NAME = "practical-devops-eks"
+    def CLUSTER_NAME = 'practical-devops-eks'
     def NAMESPACE = "${serviceName}-ns"
-    def DEPLOYMENT_NAME = "development"
+    def DEPLOYMENT_NAME = 'development'
     def ECR_REPOSITORY = "${ECR_REPO}"
 
     def global = new Global()
@@ -76,7 +76,9 @@ void call(Map pipelineParams) {
 
             stage('Deploy to EKS') {
                 steps {
-                    global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
+                    script {
+                        global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
+                    }
                 }
             }
         }

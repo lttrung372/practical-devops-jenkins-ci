@@ -76,7 +76,9 @@ void call(Map pipelineParams) {
 
             stage('Deploy to EKS') {
                 steps {
-                    global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
+                    script {
+                        global.deployToEKS(CLUSTER_NAME:CLUSTER_NAME, NAMESPACE:NAMESPACE, DEPLOYMENT_NAME:DEPLOYMENT_NAME, ECR_REPOSITORY:ECR_REPOSITORY, IMAGE_TAG:IMAGE_TAG, CONTAINER_NAME:CONTAINER_NAME)
+                    }
                 }
             }
         }
